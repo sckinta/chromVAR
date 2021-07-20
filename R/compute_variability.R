@@ -54,7 +54,7 @@ computeVariability <- function(object,
     stopifnot(all(bootstrap_quantiles < 1))
     stopifnot(bootstrap_quantiles[2] > bootstrap_quantiles[1])
     
-    boot_sd <- do.call(rbind, bplapply(seq_len(bootstrap_samples), 
+    boot_sd <- do.call(rbind, lapply(seq_len(bootstrap_samples), 
                                        function(x) 
                                          row_sds_perm(assays(object)$z, 
                                                                 na.rm)))
