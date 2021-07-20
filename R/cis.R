@@ -41,7 +41,7 @@ get_cis_groups_core <- function(peaks, grpsize = 25, stepsize = 10) {
   
   chrs <- seqlevels(peaks)
   out <- list()
-  out <- do.call(c, bplapply(seq_along(chrs), function(i) {
+  out <- do.call(c, lapply(seq_along(chrs), function(i) {
     chr_ix <- which(as.character(seqnames(peaks)) == chrs[i])
     if (length(chr_ix) > stepsize) {
       tmp <- lapply(seq_len(length(chr_ix)%/%stepsize),  function(x) { 
