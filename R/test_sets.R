@@ -315,7 +315,7 @@ get_background_peaks_alternative <- function(object, bias, niterations = 50,
     }
   }
   
-  background_peaks <- do.call(rbind, bplapply(grps, bghelper, tmp_vals, 
+  background_peaks <- do.call(rbind, lapply(grps, bghelper, tmp_vals, 
                                               niterations))
   
   return(background_peaks)
