@@ -177,7 +177,7 @@ get_background_peaks_core <- function(object,
 #' 
 getPermutedData <- function(object, niterations = 10, w = 0.1, bs = 50) {
   
-  out <- bplapply(seq_len(niterations), 
+  out <- lapply(seq_len(niterations), 
                                 function(x) get_permuted_data_helper(object, 
                                                                      w = w, 
                                                                      bs = bs))
