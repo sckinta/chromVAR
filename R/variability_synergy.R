@@ -170,7 +170,7 @@ getAnnotationSynergy_core <- function(counts_mat,
   
   
   if (is.null(variabilities)) {
-    variabilities <- do.call(c, bplapply(peak_indices, 
+    variabilities <- do.call(c, lapply(peak_indices, 
                                          compute_variability_single, 
                                          counts_mat = counts_mat, 
                                          background_peaks = background_peaks, 
@@ -367,7 +367,7 @@ getAnnotationCorrelation_core <- function(counts_mat,
   
   if (is.null(variabilities)) {
     variabilities <- do.call(c, 
-                             bplapply(peak_indices, 
+                             lapply(peak_indices, 
                                       compute_variability_single, 
                                       counts_mat = counts_mat, 
                                       background_peaks = background_peaks, 
@@ -387,7 +387,7 @@ getAnnotationCorrelation_core <- function(counts_mat,
   ixs <- which(upper.tri(outmat), arr.ind = TRUE)
   tmp <- lapply(seq_len(nrow(ixs)), function(x) unname(ixs[x, ]))
   outmat[ixs] <- outmat[ixs[, c(2:1)]] <- 
-    do.call(c, bplapply(tmp, 
+    do.call(c, lapply(tmp, 
                         get_cor_helper, 
                         peak_indices[var_order], 
                         counts_mat,
@@ -410,7 +410,7 @@ get_variability_boost_helper <- function(peak_set,
                                          nbg) {
   
   tmpsets <- remove_nonoverlap(peak_indices, peak_set)
-  tmpvar <- do.call(c, bplapply(tmpsets, 
+  tmpvar <- do.call(c, lapply(tmpsets, 
                                 compute_variability_single, 
                                 counts_mat = counts_mat, 
                                 background_peaks = background_peaks, 
@@ -426,7 +426,7 @@ get_variability_boost_helper <- function(peak_set,
                                                       replace = FALSE))), 
                    recursive = FALSE)
   
-  bgvar <- do.call(c, bplapply(bgsets, 
+  bgvar <- do.call(c, lapply(bgsets, 
                                compute_variability_single, 
                                counts_mat = counts_mat, 
                                background_peaks = background_peaks, 
