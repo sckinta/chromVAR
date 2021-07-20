@@ -252,7 +252,7 @@ get_counts_from_bams <- function(bams, peaks, paired, by_rg = FALSE,
 get_counts_from_beds <- function(beds, peaks, paired, colData = NULL) {
   
   
-  results <- bplapply(seq_along(beds), function(i) {
+  results <- lapply(seq_along(beds), function(i) {
     fragments <- readAlignmentFromBed(beds[i], paired = paired)
     if (!isTRUE(all.equal(sort(seqlevels(fragments)), sort(seqlevels(peaks))))){
       merged_seq <- unique(c(seqlevels(fragments), seqlevels(peaks)))
@@ -342,7 +342,7 @@ bamToFragmentsByRG <- function(bamfile, paired) {
                          tag = "RG"))[[1]]
     RG_tags <- mxsort(unique(scanned$tag$RG))
     
-    out <- bplapply(RG_tags, function(RG) {
+    out <- lapply(RG_tags, function(RG) {
       match_RG <- which(scanned$tag$RG == RG)
       scanned_left <- GRanges(seqnames = scanned$rname[match_RG], 
                               IRanges(start = scanned$pos[match_RG], 
@@ -360,7 +360,7 @@ bamToFragmentsByRG <- function(bamfile, paired) {
                                             tag = "RG"))[[1]]
     RG_tags <- mxsort(unique(scanned$tag$RG))
     
-    out <- bplapply(RG_tags, function(RG) {
+    out <- lapply(RG_tags, function(RG) {
       match_RG <- which(scanned$tag$RG == RG)
       return(GRanges(seqnames = scanned$rname[match_RG], 
                      IRanges(start = ifelse(scanned$strand[match_RG] ==  "-", 
@@ -421,7 +421,7 @@ getFragmentCountsByRG <- function(bam, peaks, paired) {
     return(overlaps)
   }
   
-  all_overlaps <- bplapply(rg_fragments, tmpfun)
+  all_overlaps <- lapply(rg_fragments, tmpfun)
   counts_mat <- sparseMatrix(
     i = do.call(rbind, all_overlaps)$queryHits,
     j = unlist(lapply(seq_along(all_overlaps), 
@@ -502,12 +502,12 @@ get_sample_depths_from_beds <- function(beds) {
   if (is.installed("readr")) {
     out <- 
       do.call(c, 
-              bplapply(beds,function(filename){ 
+              lapply(beds,function(filename){ 
                 nrow(suppressMessages(readr::read_tsv(file = filename, 
                                                       col_names = FALSE)))}))
   } else {
     out <- do.call(c, 
-                   bplapply(beds, 
+                   lapply(beds, 
                             function(filename) 
                               nrow(read.delim(file = filename, 
                                               header = FALSE, 
