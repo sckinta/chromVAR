@@ -384,7 +384,7 @@ compute_deviations_core <- function(counts_mat,
 
   sample_names <- colnames(counts_mat)
 
-  results <- bplapply(peak_indices,
+  results <- lapply(peak_indices,
                       compute_deviations_single,
                       counts_mat = counts_mat,
                       background_peaks = background_peaks,
